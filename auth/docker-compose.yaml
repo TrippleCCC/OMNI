@@ -1,0 +1,23 @@
+# docker-compose file for development.
+
+# ssh into app using: docker exec -it <container name> /bin/bash
+
+version: '2'
+services: 
+  app:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes: 
+      - ./:/usr/src/auth
+    # This keeps development container running
+    # tty: true
+  db:
+    image: postgres:latest
+    ports: 
+      - "5432:5432"
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: example
